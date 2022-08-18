@@ -10,3 +10,4 @@ config.test.json
 .serverless
 functions_bin
 .DS_Store
+config.dev.json
