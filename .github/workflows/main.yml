@@ -3,7 +3,7 @@ name: Main
 on:
   push:
     branches:
-      - "stable-v2"
+      - "master"
 
 jobs:
   test_frontend_job:
@@ -65,7 +65,7 @@ jobs:
     needs:
       - test_functions_job
       - test_frontend_job
-    if: github.ref == 'refs/heads/stable-v2'
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
       - run: echo ::set-output name=action_shortsha::$(echo ${GITHUB_SHA} | cut -c1-8)
@@ -90,7 +90,7 @@ jobs:
     name: Deploy Frontend
     needs:
       - deployBackend
-    if: github.ref == 'refs/heads/stable-v2'
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
