@@ -1,0 +1,32 @@
+name: 'deploy'
+description: 'deploy serverlerss functions'
+inputs:
+  SHORT_SHA:
+    description: 'SHORT_SHA source'
+    required: true
+    default: ''
+  BRANCH:
+    description: 'BRANCH source'
+    required: true
+    default: 'staging'
+  STAGE:
+    description: 'STAGE'
+    required: true
+    default: 'prod'
+  CONFIG_FILE_BASE64:
+    description: 'CONFIG_FILE_BASE64'
+    required: true
+    default: ''
+
+outputs:
+  result:
+    description: 'The result of the deploy'
+runs:
+  using: 'docker'
+  image: '../../../action_deployer.Dockerfile'
+  args:
+    - ${{ inputs.SHORT_SHA }}
+    - ${{ inputs.BRANCH }}
+    - ${{ inputs.STAGE }}
+    - ${{ inputs.CONFIG_FILE_BASE64 }}
+

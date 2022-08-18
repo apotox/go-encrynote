@@ -1,0 +1,81 @@
+service: go-encrynote
+frameworkVersion: "3"
+
+params:
+  default:
+    domain: encrynote.safidev.de
+    branch: master
+  prod:
+    domain: encrynote.safidev.de
+  dev:
+    domain: dev.encrynote.safidev.de
+
+provider:
+  name: aws
+  region: eu-central-1
+  versionFunctions: false
+  memorySize: 256
+  timeout: 10
+  environment:
+    MONGO_URL: ${file(./config.${opt:stage}.json):MONGO_URL}
+    DATABASE_NAME: ${file(./config.${opt:stage}.json):DATABASE_NAME}
+    ENCRYNOTE_DOMAIN: ${param:domain}
+    STAGE: ${opt:stage}
+    BRANCH: ${param:branch}
+    REGION: ${self:provider.region}
+
+constructs:
+    jobs:
+        type: queue
+        worker:
+          runtime: go1.x
+          handler: functions_bin/delete_note
+
+
+custom:
+  s3Sync:
+    - bucketName: ${param:domain}
+      localDir: client/app/build
+  	
+package:
+  patterns:
+    - '!./**'
+    - ./functions_bin/**
+    - ./client/app/**
+    - "!./client/app/node_modules/**"
+
+functions:
+  createNote:
+    runtime: go1.x
+    handler: functions_bin/create_note
+    reservedConcurrency: 2
+    events:
+      - http:
+          path: api/note
+          method: POST
+          cors:
+            origin: "*"
+            headers: "*"
+            cors: true
+
+  readNote:
+    runtime: go1.x
+    handler: functions_bin/read_note
+    reservedConcurrency: 2
+    environment:
+        QUEUE_URL: ${construct:jobs.queueUrl}
+    events:
+      - http:
+          path: api/note
+          method: GET
+          cors:
+            origin: "*"
+            headers: "*"
+            cors: true
+
+resources:
+  - ${file(resources/s3-bucket.yaml)}
+  - ${file(resources/s3-policies.yaml)}
+
+plugins:
+  - serverless-lift

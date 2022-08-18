@@ -1,0 +1,12 @@
+Resources:
+  WebsiteBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: ${param:domain}
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+  # ImagesBucket:
+  #   Type: 'AWS::S3::Bucket'
+  #   Properties:
+  #     BucketName: ${self:provider.environment.IMAGES_BUCKET_NAME}

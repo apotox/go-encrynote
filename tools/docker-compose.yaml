@@ -1,0 +1,19 @@
+version: "3.5"
+services:
+    mongo:
+        image: bitnami/mongodb:4.4
+        environment:
+            - MONGODB_ROOT_USER=admin
+            - MONGODB_ROOT_PASSWORD=admin1234
+            - MONGODB_EXTRA_USERNAMES=admin,admin
+            - MONGODB_EXTRA_PASSWORDS=admin1234,admin1234
+            - MONGODB_EXTRA_DATABASES=links,links-test
+            - MONGODB_REPLICA_SET_MODE=primary
+            - MONGODB_ADVERTISED_HOSTNAME=mongo
+            - MONGODB_REPLICA_SET_NAME=rs0
+            - MONGODB_REPLICA_SET_KEY=Test123456
+        ports:
+            - "3014:27017"
+        volumes:
+            - ./.mongo:/bitnami/mongodb
+            - ./mongo:/docker-entrypoint-initdb.d

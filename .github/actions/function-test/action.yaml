@@ -1,0 +1,20 @@
+name: 'function-test'
+description: 'test lambda function'
+inputs:
+  FUNCTION_NAME:
+    description: 'function to test'
+    required: true
+    default: 'ping'
+  CONFIG_FILE_BASE64:
+    description: 'CONFIG_FILE_BASE64'
+    required: true
+    default: ''
+outputs:
+  result:
+    description: 'The result of the function call'
+runs:
+  using: 'docker'
+  image: '../../../action_tester.Dockerfile'
+  args:
+    - ${{ inputs.FUNCTION_NAME }}
+    - ${{ inputs.CONFIG_FILE_BASE64 }}

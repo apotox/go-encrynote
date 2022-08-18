@@ -1,0 +1,12 @@
+node_modules
+vendor
+bin
+.vscode
+go1.x.tgz
+tools/.mongo
+config.dev.json
+config.test.json
+./package.json
+.serverless
+functions_bin
+.DS_Store
