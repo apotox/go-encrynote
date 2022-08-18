@@ -19,7 +19,9 @@ export default function Header() {
             Encrynote
           </a>
         </Typography>
-        <Button color="inherit">Github</Button>
+        <Button color="inherit" href="https://github.com/apotox/go-encrynote">
+          Github
+        </Button>
       </Toolbar>
     </AppBar>
   );
