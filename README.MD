@@ -7,7 +7,7 @@ you can find database migrations, unit tests , e2e tests and how to mock aws ser
 
 the purpose of this Application is to encrypt notes (messages) and share a one-time link with another party, i used aes for encryption. you cant use this app for production its just a POC.
 
-## Three functions:
+## AWS Lambda Functions:
 ### in /functions
 - create_note function // called from API gateway by a POST request to create new Note
 - read_note function // called from API gateway by a GET request to read a note by its id and secretKey
@@ -52,7 +52,34 @@ the Deploy action uses `action_deployer.Dockerfile` to:
     - install the necessary Nodejs dependencies to make the serverless framework works.
     - create a production config json file (decoding base64 secrets to a new file config.prod.json) this file used by the serverless cli to set all the required envirenment var during the deploy-to-aws process.
 
+the `entrypoint shell scripts` used to handle the diffrent args from the custom github actions.
+
 ### Database
-Mongodb database
+- Mongodb database
+
+### Migrations
+- you can add new migrations to `./migrations`
+```go
+// ...
+migrate.Register(func(db *mongo.Database) error {
+		err := db.CreateCollection(context.Background(), "<collection name>", nil)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}, func(db *mongo.Database) error {
+		fmt.Printf("Dropping %s collection\n", "notes")
+		err := db.Collection("<collection name>").Drop(context.TODO())
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+```
+
+### Tests
+beside the `unit tests` , there are the e2e tests to test the function behavior with mocked requests/events.
+
 
 maintained by [Safi](https://dz.linkedin.com/in/safi-eddine-bouhentala).
