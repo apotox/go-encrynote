@@ -8,14 +8,16 @@ you can find database migrations, unit tests , e2e tests and how to mock aws ser
 the purpose of this Application is to encrypt notes (messages) and share a one-time link with another party, i used aes for encryption. you cant use this app for production its just a POC.
 
 ## AWS Lambda Functions:
-### in /functions
+### in `/functions`
 - create_note function // called from API gateway by a POST request to create new Note
 - read_note function // called from API gateway by a GET request to read a note by its id and secretKey
 - delete_note function // triggred by SQS queue (QueueDeleteNote), the read_function publishs to the queue a NoteId after reading the note. delete_note function will consume this id and delete the Note.
 
 each function will get compiled to a **Go** binary and deployed as a lambda function (see Makefile).
 
-
+## SQS 
+the `delete_function` triggred by an `SQS` message, which is published after the user read a note.
+the message is the note's `_id`.
 
 ## Github Actions and CI/CD
 
@@ -42,22 +44,22 @@ test_functions_job:
 
 the custom github action `.github/actions/function-test` will be responsible for creating/running the test docker containers.
 
-### Deployment:
+## Deployment:
 
 after a successful tests, a deploy job will be started to deploy all the compiled lambda functions. i used `serverless framework v3` to make that easier. you can see the `serverless.yaml`.
 
 the Deploy action uses `action_deployer.Dockerfile` to:
 
-    - build the Go functions
-    - install the necessary Nodejs dependencies to make the serverless framework works.
-    - create a production config json file (decoding base64 secrets to a new file config.prod.json) this file used by the serverless cli to set all the required envirenment var during the deploy-to-aws process.
+  - build the `Go` functions
+  - install the necessary `Nodejs` dependencies to make the serverless framework works.
+  - create a production config json file (decoding base64 secrets to a new file config.prod.json) this file used by the `serverless cli` to set all the required envirenment var during the deploy-to-aws process.
 
 the `entrypoint shell scripts` used to handle the diffrent args from the custom github actions.
 
-### Database
+## Database
 - Mongodb database
 
-### Migrations
+## Migrations
 - you can add new migrations to `./migrations`
 ```go
 // ...
@@ -78,7 +80,7 @@ migrate.Register(func(db *mongo.Database) error {
 	})
 ```
 
-### Tests
+## Tests
 beside the `unit tests` , there are the e2e tests to test the function behavior with mocked requests/events.
 
 
