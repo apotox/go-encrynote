@@ -13,8 +13,46 @@ the purpose of this Application is to encrypt notes (messages) and share a one-t
 - read_note function // called from API gateway by a GET request to read a note by its id and secretKey
 - delete_note function // triggred by SQS queue (QueueDeleteNote), the read_function publishs to the queue a NoteId after reading the note. delete_note function will consume this id and delete the Note.
 
-each function will get compiled to a **Go** binary and deployed as a lambda function (see Makefile)
+each function will get compiled to a **Go** binary and deployed as a lambda function (see Makefile).
 
 
 
-Actively maintained by [Safi](https://dz.linkedin.com/in/safi-eddine-bouhentala).
+## Github Actions and CI/CD
+
+### Testing:
+
+every `function` will be tested separately using a common docker image `action_tester.Dockerfile` , and by usign github action Matrix we can test all function in parallel ,
+you can add more functions to be tested in `.github/workflows/main.yml` 
+
+``` yaml
+test_functions_job:
+    runs-on: ubuntu-latest
+    name: Test functions
+    strategy:
+      fail-fast: true
+      matrix:
+        function:
+          [
+            # { functionName: "<function package name>" },
+            { functionName: "create_note" },
+            { functionName: "read_note" },
+            { functionName: "delete_note" },
+          ]
+```
+
+the custom github action `.github/actions/function-test` will be responsible for creating/running the test docker containers.
+
+### Deployment:
+
+after a successful tests, a deploy job will be started to deploy all the compiled lambda functions. i used `serverless framework v3` to make that easier. you can see the `serverless.yaml`.
+
+the Deploy action uses `action_deployer.Dockerfile` to:
+
+    - build the Go functions
+    - install the necessary Nodejs dependencies to make the serverless framework works.
+    - create a production config json file (decoding base64 secrets to a new file config.prod.json) this file used by the serverless cli to set all the required envirenment var during the deploy-to-aws process.
+
+### Database
+Mongodb database
+
+maintained by [Safi](https://dz.linkedin.com/in/safi-eddine-bouhentala).
