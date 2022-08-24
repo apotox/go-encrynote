@@ -1,5 +1,8 @@
 ## [Encrynote Website](https://encrynote.safidev.de) 
 
+
+![arch](https://github.com/apotox/go-encrynote/blob/master/client/app/public/screen.png?raw=true)
+
 **Encrynote** – an application Built on AWS Lambda and other next-gen cloud services, that auto-scale and only charge you when they run. This is a working example about how to lowers the total cost of running and operating your apps, enabling you to build more and manage less.
 
 Encrynote is a web application tool that uses serverless framework to deploy both react frontend and cloud infrastructure needed to make the serverless **Go** backend works. using Reactjs, Typescript, Go, Mongodb, Github actions, and SQS service.
