@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
 import { Routes, Route } from "react-router-dom";
-import Home from './pages/Home';
-import NotePage from './pages/NotePage';
+import EncryptPage from './pages/EncryptPage';
+import DecryptPage from './pages/DecryptPage';
 import { Toast } from './components/Toast';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/note/:id" element={<NotePage />} />
+        <Route path="/" element={<EncryptPage />} />
+        <Route path="/note/:id" element={<DecryptPage />} />
       </Routes>
 
       <Toast />

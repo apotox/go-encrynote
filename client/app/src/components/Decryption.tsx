@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -7,7 +7,6 @@ import { TextField } from "@mui/material";
 import Client from "../axios-client";
 import { Note } from "../common/types";
 
-let note: Note;
 function Decryption({ id }: { id: string }) {
   const [message, setMessage] = useState<string>("");
   const [isLoading, setLoading] = useState(false);

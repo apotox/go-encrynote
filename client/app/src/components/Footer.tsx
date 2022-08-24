@@ -1,3 +1,4 @@
+import React from "react";
 import getConfig from "../config";
 
 export default function Footer() {
@@ -13,7 +14,7 @@ export default function Footer() {
         textAlign: "center",
       }}
     >
-      <span>{getConfig().REACT_APP_APP_SHORTSHA}</span>
+      <span>Commit sha: {getConfig().REACT_APP_APP_SHORTSHA}</span>
     </footer>
   );
 }

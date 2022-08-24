@@ -27,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test src",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npx lint"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +50,10 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/recoil": "^0.0.9"
+    "@types/recoil": "^0.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.34.0",
+    "@typescript-eslint/parser": "^5.34.0",
+    "eslint": "^8.22.0",
+    "eslint-plugin-react": "^7.30.1"
   }
 }

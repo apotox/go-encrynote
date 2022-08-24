@@ -1,12 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import { Checkbox, FormControlLabel, TextField } from "@mui/material";
-import PasswordInput from "./PasswordInput";
+import { TextField } from "@mui/material";
 import axiosClient from "../axios-client";
 import { useToast } from "./Toast";
 import getConfig from "../config";
@@ -18,9 +16,6 @@ interface EncryptResult {
 
 export default function Encryption() {
   const [message, setMessage] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [isPasswordUsed, setIsPasswordUsed] = useState<boolean>(false);
-  const [deleteOnRead, setDeleteOnRead] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const [encryptResult, setEncryptResult] = useState<EncryptResult | null>(
@@ -37,7 +32,6 @@ export default function Encryption() {
       })
       .then((response) => {
         setMessage("");
-        setPassword("");
         toast.open("Note encrypted", "success");
         setEncryptResult(response.data);
       })
@@ -80,43 +74,6 @@ export default function Encryption() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-
-          <Box
-            sx={{
-              marginTop: "1rem",
-            }}
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isPasswordUsed}
-                  disabled={true}
-                  onChange={(e) => setIsPasswordUsed(!isPasswordUsed)}
-                />
-              }
-              label={"protect this note with a password?"}
-            />
-            {isPasswordUsed && (
-              <PasswordInput password={password} setPassword={setPassword} />
-            )}
-          </Box>
-
-          <Box
-            sx={{
-              marginTop: "0.4rem",
-            }}
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  disabled={true}
-                  checked={deleteOnRead}
-                  onChange={(e) => setDeleteOnRead(!deleteOnRead)}
-                />
-              }
-              label={"delete note after read?"}
-            />
-          </Box>
         </CardContent>
         <CardActions
           style={{
