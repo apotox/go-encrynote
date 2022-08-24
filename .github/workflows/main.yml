@@ -37,6 +37,7 @@ jobs:
           CI: false
         run: |
           yarn install --production=false
+          yarn lint
           yarn build
           yarn test
 

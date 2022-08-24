@@ -5,13 +5,13 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
 test("renders Encrynote title", () => {
-  render(
-    <BrowserRouter>
-      <RecoilRoot>
-        <App />
-      </RecoilRoot>
-    </BrowserRouter>
-  );
-  const linkElement = screen.getByText(/Encrynote/i);
-  expect(linkElement).toBeInTheDocument();
+	render(
+		<BrowserRouter>
+			<RecoilRoot>
+				<App />
+			</RecoilRoot>
+		</BrowserRouter>
+	);
+	const linkElement = screen.getByText(/Encrynote/i);
+	expect(linkElement).toBeInTheDocument();
 });

@@ -6,16 +6,16 @@ import DecryptPage from './pages/DecryptPage';
 import { Toast } from './components/Toast';
 
 function App() {
-  return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<EncryptPage />} />
-        <Route path="/note/:id" element={<DecryptPage />} />
-      </Routes>
+	return (
+		<div className="App">
+			<Routes>
+				<Route path="/" element={<EncryptPage />} />
+				<Route path="/note/:id" element={<DecryptPage />} />
+			</Routes>
 
-      <Toast />
-    </div>
-  );
+			<Toast />
+		</div>
+	);
 }
 
 export default App;

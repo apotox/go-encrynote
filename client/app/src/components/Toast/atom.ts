@@ -7,10 +7,10 @@ export interface ToastState {
 }
 
 export const toastAtom = atom({
-  key: "toast",
-  default: {
-    message: "",
-    type: "info",
-    open: false,
-  },
+	key: "toast",
+	default: {
+		message: "",
+		type: "info",
+		open: false,
+	},
 });

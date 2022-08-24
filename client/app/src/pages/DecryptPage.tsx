@@ -5,20 +5,20 @@ import Layout from "../components/Layout";
 const Decryption = lazy(() => import("../components/Decryption"));
 
 export default function NotePage() {
-  const { id } = useParams<string>();
+	const { id } = useParams<string>();
 
-  return (
-    <Layout>
-      <h2>Note</h2>
-      <Typography
-        sx={{ fontSize: 14, marginBottom: 4 }}
-        color="text.secondary"
-        gutterBottom
-      >
+	return (
+		<Layout>
+			<h2>Note</h2>
+			<Typography
+				sx={{ fontSize: 14, marginBottom: 4 }}
+				color="text.secondary"
+				gutterBottom
+			>
         decrypt your notes {id}
-      </Typography>
+			</Typography>
 
-      <Decryption id={id || ""} />
-    </Layout>
-  );
+			<Decryption id={id || ""} />
+		</Layout>
+	);
 }
