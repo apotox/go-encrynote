@@ -114,7 +114,7 @@ jobs:
           REACT_APP_URL: https://encrynote.safidev.de
           CI: false
         run: |
-          yarn install
+          yarn install --production
           yarn build
       - uses: jakejarvis/s3-sync-action@master
         name: s3-sync
