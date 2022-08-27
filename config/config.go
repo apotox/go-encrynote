@@ -53,6 +53,7 @@ func GetConfig() *Configs {
 		STAGE:            getEnvVar("STAGE", "dev"),
 		ENCRYNOTE_DOMAIN: getEnvVar("ENCRYNOTE_DOMAIN", "localhost:3000"),
 		DATABASE_NAME:    getEnvVar("DATABASE_NAME", fmt.Sprintf("encrynote-%s", getEnvVar("STAGE", "dev"))),
+		MONGO_URL:        getEnvVar("MONGO_URL", ""),
 	}
 
 	if _currentConfig.STAGE == "dev" || _currentConfig.STAGE == "test" {
