@@ -18,7 +18,7 @@ type Note struct {
 	CreatedAt Datetime           `json:"createdAt"`
 }
 
-type Services struct {
+type Queues struct {
 	QueueDeleteNote queue.Queue
 }
 

@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
-func Handler(ctx context.Context, request events.APIGatewayProxyRequest, services pkg.Services) (events.APIGatewayProxyResponse, error) {
+func Handler(ctx context.Context, request events.APIGatewayProxyRequest, queues pkg.Queues) (events.APIGatewayProxyResponse, error) {
 
 	idAndKey := request.QueryStringParameters["id"]
 	if idAndKey == "" || len(idAndKey) != 56 {
@@ -32,7 +32,7 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest, service
 
 	defer func() {
 		log.Printf("Deleting message: %s", noteId)
-		services.QueueDeleteNote.Publish(noteId)
+		queues.QueueDeleteNote.Publish(noteId)
 	}()
 
 	return pkg.MakeResponse(map[string]interface{}{

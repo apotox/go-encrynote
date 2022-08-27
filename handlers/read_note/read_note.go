@@ -12,7 +12,7 @@ import (
 
 func main() {
 	lambda.Start(func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-		return read_note.Handler(ctx, request, pkg.Services{
+		return read_note.Handler(ctx, request, pkg.Queues{
 			QueueDeleteNote: queue.GetQueueDeleteNote(),
 		})
 	})

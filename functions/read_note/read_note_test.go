@@ -60,7 +60,7 @@ func TestReadNote(t *testing.T) {
 			queueDeleteNoteMocked.On("Publish", responseBody["itemId"].(string)).Return(nil)
 
 			queueDeleteNoteMocked.Init()
-			readResult, err := Handler(context.TODO(), buildReadEvent(id), pkg.Services{
+			readResult, err := Handler(context.TODO(), buildReadEvent(id), pkg.Queues{
 				QueueDeleteNote: queueDeleteNoteMocked,
 			})
 			So(err, ShouldBeNil)
