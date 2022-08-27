@@ -6,8 +6,8 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
-// GetResponse returns a response with the given body and status code.
-func GetResponse(obj interface{}, StatusCode int) (events.APIGatewayProxyResponse, error) {
+// MakeResponse returns a response with the given body and status code.
+func MakeResponse(obj interface{}, StatusCode int) (events.APIGatewayProxyResponse, error) {
 
 	jsonItem, err := json.Marshal(obj)
 	stringItem := string(jsonItem) + "\n"

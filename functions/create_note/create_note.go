@@ -16,24 +16,22 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 	note, err := pkg.ParseBody[pkg.Note](body)
 
 	if err != nil {
-		return pkg.GetResponse(map[string]interface{}{
+		return pkg.MakeResponse(map[string]interface{}{
 			"error": err.Error(),
 		}, 500)
 	}
 
 	if note == nil {
-		return pkg.GetResponse(map[string]interface{}{
+		return pkg.MakeResponse(map[string]interface{}{
 			"error": "note parsed body is nil",
 		}, 500)
 	}
 
 	if err := validator.Validate(note); err != nil {
-		return pkg.GetResponse(map[string]interface{}{
+		return pkg.MakeResponse(map[string]interface{}{
 			"error": err.Error(),
 		}, 400)
 	}
-
-	note.CreatedAt = pkg.GetDateTime()
 
 	usedKey := note.EncryptMessage()
 
@@ -41,12 +39,12 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (events
 
 	if err != nil {
 		log.Printf("Error inserting note: %s", err)
-		return pkg.GetResponse(map[string]interface{}{
+		return pkg.MakeResponse(map[string]interface{}{
 			"error": err.Error(),
 		}, 500)
 	}
 
-	return pkg.GetResponse(map[string]interface{}{
+	return pkg.MakeResponse(map[string]interface{}{
 		"itemId":  note.Id,
 		"usedKey": usedKey,
 	}, 200)

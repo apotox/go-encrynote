@@ -47,7 +47,7 @@ func Marshal(entity interface{}) string {
 }
 
 // GetDateTime returns the current date time in the format YYYY-MM-DD HH:MM:SS
-func GetDateTime() Datetime {
+func GetDateTimeNow() Datetime {
 	return Datetime{
 		primitive.NewDateTimeFromTime(time.Now()),
 	}

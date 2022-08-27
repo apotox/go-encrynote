@@ -10,20 +10,20 @@ import (
 
 func Handler(ctx context.Context, request events.APIGatewayProxyRequest, services pkg.Services) (events.APIGatewayProxyResponse, error) {
 
-	embadedId := request.QueryStringParameters["id"]
-	if embadedId == "" || len(embadedId) != 56 {
-		return pkg.GetResponse(map[string]interface{}{
+	idAndKey := request.QueryStringParameters["id"]
+	if idAndKey == "" || len(idAndKey) != 56 {
+		return pkg.MakeResponse(map[string]interface{}{
 			"error": "id is required",
 		}, 400)
 	}
 
-	noteId, privateKey := embadedId[:24], embadedId[24:]
+	noteId, privateKey := idAndKey[:24], idAndKey[24:]
 
 	note, err := Read(noteId)
 
 	if err != nil {
 		log.Printf("Error reading noteid:%s - %s", noteId, err)
-		return pkg.GetResponse(map[string]interface{}{
+		return pkg.MakeResponse(map[string]interface{}{
 			"error": err.Error(),
 		}, 400)
 	}
@@ -35,7 +35,7 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest, service
 		services.QueueDeleteNote.Publish(noteId)
 	}()
 
-	return pkg.GetResponse(map[string]interface{}{
+	return pkg.MakeResponse(map[string]interface{}{
 		"itemId":  note.Id,
 		"message": message,
 	}, 200)
