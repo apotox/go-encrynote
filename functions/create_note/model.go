@@ -13,6 +13,7 @@ func Insert(note *pkg.Note) error {
 	defer cancel()
 
 	note.Id = primitive.NewObjectID()
+	note.CreatedAt = pkg.GetDateTime()
 
 	_, err := database.GetCollection(client, note.GetCollectionName()).InsertOne(ctx, note)
 	if err != nil {

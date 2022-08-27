@@ -55,13 +55,13 @@ func TestReadNote(t *testing.T) {
 
 			id := responseBody["itemId"].(string) + responseBody["usedKey"].(string)
 
-			mocked := new(mocks.QueueDeleteNoteMock)
-			mocked.On("Init").Return(nil)
-			mocked.On("Publish", responseBody["itemId"].(string)).Return(nil)
+			queueDeleteNoteMocked := new(mocks.QueueDeleteNoteMock)
+			queueDeleteNoteMocked.On("Init").Return(nil)
+			queueDeleteNoteMocked.On("Publish", responseBody["itemId"].(string)).Return(nil)
 
-			mocked.Init()
+			queueDeleteNoteMocked.Init()
 			readResult, err := Handler(context.TODO(), buildReadEvent(id), pkg.Services{
-				QueueDeleteNote: mocked,
+				QueueDeleteNote: queueDeleteNoteMocked,
 			})
 			So(err, ShouldBeNil)
 			readResponseBody, parseError := pkg.ParseResponseBody(readResult)
